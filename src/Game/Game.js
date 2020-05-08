@@ -1,10 +1,18 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import MyContext from '../context';
 import './Game.scss';
-import Confetti from './Confetti'
+import logoImage from '../Img/openTrivia.png';
+import Confetti from './Confetti';
+import EndGame from './EndGame';
+import ModalReturn from './ModalReturn';
 
 const Game = () => {
+
+    //Modal
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
     //Guardamos las preguntas que han salido. El length lo comparamos con el total de preguntas que queremos responder 'clientInfoFromContext.numberOfQuestions'
     const [showQuestions, setShowQuestions] = useState([]);
@@ -82,6 +90,8 @@ const Game = () => {
         !endGame
             ? (showQuestions.length !== 0 &&
                 <div className="gamecard">
+                    <img className="imgLogo" src={logoImage} alt="GameLogo" onClick={()=>toggle()}/>
+                    <ModalReturn modal={modal} toggle={toggle}/>
                     <div className="row">
                         {/* Mirar -> https://www.npmjs.com/package/react-circular-progressbar */}
                         <div className="col-6 justifyAround">Tiempo</div>
@@ -116,7 +126,7 @@ const Game = () => {
                             </div>)}
                     </div>
                 </div>)
-            : (<p>FINNNNN</p>)
+            : <EndGame puntos={clientInfoFromContext.totalPoints}/>
     )
 }
 

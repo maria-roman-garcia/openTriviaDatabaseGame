@@ -10,6 +10,13 @@ $orangeColor: rgb(255, 147, 7);
 .gamecard {
     padding: 0 4rem;
 
+    & .imgLogo {
+        width: 15vw;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
+
     & .points {
         color: $greyColor;
         background-color: white;
