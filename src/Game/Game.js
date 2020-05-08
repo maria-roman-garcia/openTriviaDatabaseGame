@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MyContext from '../context';
 import './Game.scss';
-
+import Confetti from './Confetti'
 
 const Game = () => {
 
@@ -12,13 +12,16 @@ const Game = () => {
     //Posibles soluciones respuestas correcta + Incorrecta
     const [possibleSolutions, setPossibleSolutions] = useState([]);
 
+    //Final del juego
+    const [endGame, setEndGame] = useState(false);
+
     const valueFromContext = useContext(MyContext); //Nuestro contexto
     const apiInfoFromContext = valueFromContext.Context.apiInfo;
     let clientInfoFromContext = valueFromContext.Context.ClientInfo;
     const setContextFunctionFromContext = valueFromContext.setContext;
 
     const nextQuestion = () => {
-        showQuestions.length < clientInfoFromContext.numberOfQuestions ? getQuestion() : endGame()
+        showQuestions.length < clientInfoFromContext.numberOfQuestions ? getQuestion() : setEndGame(true);
     }
 
     const getQuestion = () => {
@@ -50,61 +53,70 @@ const Game = () => {
             })
     }
 
-    const endGame = () => {
-        return (<p>FIN</p>)
-    }
-
     useEffect(() => { nextQuestion() }, []);
+
+    const rightAnswer = () => {
+        setContextFunctionFromContext({
+            ...valueFromContext.Context,
+            ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints + 10 }
+        })
+        Confetti.start()
+        setTimeout(() => {
+            Confetti.stop()
+        }, 2000)
+        setTimeout(() => { nextQuestion() }, 1000)
+    }
 
     //Comprobamos si la respuesta seleccionada es correcta o no
     const checkAnswer = (answer) => {
         answer === showQuestions[showQuestions.length - 1].correct_answer
-            ? setContextFunctionFromContext({ ...valueFromContext.Context, 
-                ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints + 10 }})
+            ? rightAnswer()
 
             : setContextFunctionFromContext({
                 ...valueFromContext.Context,
-                ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints -2 }
+                ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints - 2 }
             })
     }
 
     return (
-        showQuestions.length !== 0 &&
-        <div className="gamecard">
-            <div className="row">
-                {/* Mirar -> https://www.npmjs.com/package/react-circular-progressbar */}
-                <div className="col-6 justifyAround">Tiempo</div>
-                <div className="col-6 justifyAround">
-                    <p className="points">Points: <span style={{ fontWeight: 'bold', fontSize: '30px' }}>{clientInfoFromContext.totalPoints}</span> pts</p>
-                </div>
-            </div>
-            <div className="row numberQuestionAndDifficulty">
-                <div className="col-6 justifyAround">
-                    <p className="questionNumber">{`${showQuestions.length} / ${clientInfoFromContext.numberOfQuestions}`}</p>
-                </div>
-                <div className="col-6 justifyAround">
-                    <p className="questionDifficulty">{showQuestions[showQuestions.length - 1].difficulty.toUpperCase()}</p>
-                </div>
-            </div>
-            <div className="row question">
-                <div className="col-12 justifyAround">
-                    <p>
-                        <span role="img" aria-label='manoSeñalando'>👉</span>
-                        {showQuestions[showQuestions.length - 1].category}
-                        <span role="img" aria-label='manoSeñalando'>👈</span>
-                    </p>
-                </div>
-                <div className="col-12 justifyAround">
-                    <p>{showQuestions[showQuestions.length - 1].question}</p>
-                </div>
-            </div>
-            <div className="row justifyAround answers">
-                {possibleSolutions.map((answer, index) =>
-                    <div key={index} onClick={() => checkAnswer(answer)}>
-                        <p>{answer}</p>
-                    </div>)}
-            </div>
-        </div>
+        !endGame
+            ? (showQuestions.length !== 0 &&
+                <div className="gamecard">
+                    <div className="row">
+                        {/* Mirar -> https://www.npmjs.com/package/react-circular-progressbar */}
+                        <div className="col-6 justifyAround">Tiempo</div>
+                        <div className="col-6 justifyAround">
+                            <p className="points">Points: <span style={{ fontWeight: 'bold', fontSize: '30px' }}>{clientInfoFromContext.totalPoints}</span> pts</p>
+                        </div>
+                    </div>
+                    <div className="row numberQuestionAndDifficulty">
+                        <div className="col-6 justifyAround">
+                            <p className="questionNumber">{`${showQuestions.length} / ${clientInfoFromContext.numberOfQuestions}`}</p>
+                        </div>
+                        <div className="col-6 justifyAround">
+                            <p className="questionDifficulty">{showQuestions[showQuestions.length - 1].difficulty.toUpperCase()}</p>
+                        </div>
+                    </div>
+                    <div className="row question">
+                        <div className="col-12 justifyAround">
+                            <p>
+                                <span role="img" aria-label='manoSeñalando'>👉</span>
+                                {showQuestions[showQuestions.length - 1].category}
+                                <span role="img" aria-label='manoSeñalando'>👈</span>
+                            </p>
+                        </div>
+                        <div className="col-12 justifyAround">
+                            <p>{showQuestions[showQuestions.length - 1].question}</p>
+                        </div>
+                    </div>
+                    <div className="row justifyAround answers">
+                        {possibleSolutions.map((answer, index) =>
+                            <div key={index} onClick={() => checkAnswer(answer)}>
+                                <p>{answer}</p>
+                            </div>)}
+                    </div>
+                </div>)
+            : (<p>FINNNNN</p>)
     )
 }
 
