@@ -1,0 +1,65 @@
+$blueColor: #64FFE5;
+$greyColor: #282c34;
+$orangeColor: rgb(255, 147, 7);
+
+.justifyAround {
+    display: flex;
+    justify-content: space-around;
+}
+
+.gamecard {
+    padding: 0 4rem;
+
+    & .points {
+        color: $greyColor;
+        background-color: white;
+        border-radius: 1rem;
+        padding: 5px 30px;
+    }
+
+    & .numberQuestionAndDifficulty {
+        color: $greyColor;
+        background-color: $blueColor;
+        padding: 5px;
+        border-radius: 10px;
+        margin: 10px 0;
+
+        & p {
+            margin: 0 !important;
+        }
+
+        & .questionNumber {
+            font-weight: bold;
+        }
+    }
+
+    & .question {
+        margin: 30px 0;
+        background-color: white;
+        color: $greyColor;
+        padding: 20px;
+        border-radius: 31px;
+    }
+
+    & .answers {
+
+        & div {
+            margin: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 11px;
+            transition: padding 0.5s;
+
+            & p {
+                margin: 0;
+            }
+        }
+
+        & div:hover {
+            padding: 11px 30px;
+            background-color: $blueColor;
+            color: $greyColor;
+            border: 2px solid $orangeColor;
+        }
+    }
+}

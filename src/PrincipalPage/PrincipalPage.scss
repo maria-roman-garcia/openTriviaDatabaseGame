@@ -1,0 +1,69 @@
+$blueColor: #64FFE5;
+$greyColor: #282c34;
+$orangeColor: rgb(255, 147, 7);
+
+.principalPage {
+
+    & p,
+    h4 {
+        margin: 0 !important;
+    }
+
+    & h4 {
+        font-weight: bold;
+        margin-right: 10px !important;
+    }
+
+    & .justifyCenter {
+        display: flex;
+        justify-content: center;
+    }
+
+    & .alignCenter {
+        display: flex;
+        align-items: center;
+    }
+
+    & .row {
+        margin: 10px 0;
+    }
+
+    & .logoImg img {
+        height: 15vh;
+        margin-bottom: 3rem;
+    }
+
+    .filters {
+        border: 2px solid $blueColor;
+        border-radius: 2rem;
+        padding: 1rem;
+
+        & .levelItem {
+            background-color: white;
+            margin: 10px;
+            color: $greyColor;
+            padding: 6px 22px;
+            border-radius: 1rem;
+        }
+
+        & .levelItemSelected {
+            background-color: $blueColor;
+            margin: 0 10px;
+            color: $greyColor;
+            padding: 6px 22px;
+            border-radius: 1rem;
+            border: 2px solid $orangeColor;
+            font-weight: bold;
+        }
+    }
+
+    & .playButton {
+        background-color: $blueColor;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 20px;
+        & a{
+            color: $greyColor;
+        }
+    }
+}

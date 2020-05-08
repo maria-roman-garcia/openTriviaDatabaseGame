@@ -1,0 +1,33 @@
+$blueColor: #64FFE5;
+$greyColor: #282c34;
+$orangeColor: rgb(255, 147, 7);
+
+.justifyCenter {
+    display: flex;
+    justify-content: center;
+}
+
+.alignCenter{
+    display: flex;
+    align-items: center;
+}
+
+#slider {
+    -webkit-appearance: none;
+    background: $orangeColor;
+    height: 5px;
+    outline: none;
+    border-radius: 10px;
+    width: 100%;
+}
+
+#totalQuestions {
+    background-color: $blueColor;
+    font-weight: bold;
+    color: $greyColor;
+    border: 2px solid $orangeColor;
+    border-radius: 50px;
+    padding: 20px 24px;
+    margin: 0 10px;
+    width: fit-content;
+}
