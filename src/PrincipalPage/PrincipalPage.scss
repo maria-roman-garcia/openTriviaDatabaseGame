@@ -37,6 +37,15 @@ $orangeColor: rgb(255, 147, 7);
         border: 2px solid $blueColor;
         border-radius: 2rem;
         padding: 1rem;
+        
+        & a {
+            color: #282c34;
+        }
+
+        & a:hover {
+            text-decoration: none;
+            color: #282c34;
+        }
 
         & .levelItem {
             background-color: white;

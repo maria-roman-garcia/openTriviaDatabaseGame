@@ -1,6 +1,4 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import MyContext from '../context';
 import './Game.scss';
 import logoImage from '../Img/openTrivia.png';

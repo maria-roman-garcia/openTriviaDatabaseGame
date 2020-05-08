@@ -21,7 +21,7 @@ const Category = () => {
                     ? <Link to='/categoryFilter'>
                         <div className="alignCenter" style={{ width: '100%' }}>
                             <p style={{color: 'white'}}>Choose a category here!
-                        <span role="img" aria-label='manoSeñalando'>👉</span>
+                            <span role="img" aria-label='manoSeñalando'>👉</span>
                             </p>
                             <div className="levelItem">Categories &nbsp; {editIcon}</div>
                         </div>

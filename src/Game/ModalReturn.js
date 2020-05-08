@@ -8,13 +8,13 @@ const ModalReturn = (props) => {
     <div>
       <Modal isOpen={props.modal}>
         <ModalBody>
-          ¿Estás seguro de que quieres volver? Perderás la partida.
+          Are you sure you want to come back? You will lose all changes...
         </ModalBody>
         <ModalFooter>
             <Link to="/">
-                <Button color="primary">Si, seguro</Button>
+                <Button color="primary">Yes, sure</Button>
             </Link>
-          <Button color="secondary" onClick={props.toggle}>Seguir jugando</Button>
+          <Button color="secondary" onClick={props.toggle}>keep on playing</Button>
         </ModalFooter>
       </Modal>
     </div>

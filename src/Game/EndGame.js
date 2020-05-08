@@ -11,15 +11,17 @@ const EndGame = (props) => {
                 <img className="endGif" src={gif} alt='playGif' />
             </div>
             <div className="row justifyCenter">
-                <h4>----- FIN DEL JUEGO -----</h4>
+                <h4>----- END OF THE GAME -----</h4>
             </div>
             <div className="row justifyCenter">
-                <p>{`Puntuación total: ${props.puntos}`}</p>
+                <p>{`Total Points: ${props.puntos}`}</p>
             </div>
             <div div className="row justifyCenter playButton">
                 <Link to='/'>
-                    <div>
+                    <div className="row">
+                        <span role="img" aria-label='game'>🎮</span>
                         <h4>PLAY AGAIN!</h4>
+                        <span role="img" aria-label='game'>🎮</span>
                     </div>
                 </Link>
             </div>
