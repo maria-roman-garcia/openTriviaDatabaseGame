@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import './PrincipalPage.scss';
 import logoImage from '../Img/openTrivia.png';
 import Level from './Level/Level';

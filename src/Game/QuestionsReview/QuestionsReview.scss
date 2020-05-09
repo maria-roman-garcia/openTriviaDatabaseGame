@@ -1,0 +1,24 @@
+.closeButton{
+    justify-content: flex-end;
+}
+.questionsReview {
+    border: 2px solid #64FFE5;
+    border-radius: 2rem;
+    padding: 1rem;
+    width: 90vw;
+    margin: 10px 0;
+
+    & .justifyCenter{
+        display: flex;
+        justify-content: center;
+    }
+
+    & .answer {
+        & p{
+            margin: 0;
+        }
+        border: 2px solid white;
+        border-radius: 10px;
+        padding: 11px;
+    }
+}

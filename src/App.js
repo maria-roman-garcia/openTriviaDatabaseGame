@@ -3,6 +3,8 @@ import './App.css';
 import PrincipalPage from './PrincipalPage/PrincipalPage';
 import Game from './Game/Game';
 import CategoryPopUp from './PrincipalPage/Category/CategoryPopUp';
+import EndGame from './Game/EndGame';
+import QuestionsReview from './Game/QuestionsReview/QuestionsReview'
 import MyContext from './context';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -35,7 +37,8 @@ function App() {
       level: 1,
       category: [],
       numberOfQuestions: 10,
-      totalPoints: 0
+      totalPoints: 0,
+      allQuestions: []
     }
   });
 
@@ -65,6 +68,8 @@ function App() {
           <Route path='/' exact component={PrincipalPage} />
           <Route path='/game' component={Game} />
           <Route path='/categoryFilter' component={CategoryPopUp}/>
+          <Route path='/questionsReview' component={QuestionsReview}/>
+          <Route path='/endGame' component={EndGame}/>
         </Router>
       </div>
     </MyContext.Provider>

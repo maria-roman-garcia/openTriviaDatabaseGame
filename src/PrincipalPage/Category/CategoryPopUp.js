@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import MyContext from '../../context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faTimesCircle, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './CategoryPopUp.scss';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,6 @@ const CategoryPopUp = () => {
     let clientInfoFromContext = valueFromContext.Context.ClientInfo;
     const setContextFunctionFromContext = valueFromContext.setContext;
 
-    const closeIcon = <FontAwesomeIcon icon={faTimes} color='#64FFE5' /> //Icono cerrar de font-awesome
     const deleteIcon = <FontAwesomeIcon icon={faTimesCircle} color='#64FFE5' /> //Icono NO añadido de font-awesome
     const searchIcon = <FontAwesomeIcon icon={faSearch} color='#64FFE5' /> //Icono buscar de font-awesome
 
