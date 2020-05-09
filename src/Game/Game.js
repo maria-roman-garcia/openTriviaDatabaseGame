@@ -5,6 +5,7 @@ import logoImage from '../Img/openTrivia.png';
 import Confetti from './Confetti';
 import EndGame from './EndGame';
 import ModalReturn from './ModalReturn';
+import Time from './Time';
 
 const Game = () => {
 
@@ -15,9 +16,6 @@ const Game = () => {
     //Guardamos las preguntas que han salido. El length lo comparamos con el total de preguntas que queremos responder 'clientInfoFromContext.numberOfQuestions'
     const [showQuestions, setShowQuestions] = useState([]);
 
-    //Posibles soluciones respuestas correcta + Incorrecta
-    const [possibleSolutions, setPossibleSolutions] = useState([]);
-
     //Final del juego
     const [endGame, setEndGame] = useState(false);
 
@@ -27,11 +25,12 @@ const Game = () => {
     const setContextFunctionFromContext = valueFromContext.setContext;
 
     const nextQuestion = () => {
+        console.log('Soy next question')
         showQuestions.length < clientInfoFromContext.numberOfQuestions ? getQuestion() : setEndGame(true);
     }
 
     const getQuestion = () => {
-
+        console.log('Soy get Question...hago fetch')
         // Ejemplo de Api Url --> https://opentdb.com/api.php?amount=10&category=11&difficulty=easy
         // Ejemplo de Api Url en caso de level 'Any Difficulty' --> https://opentdb.com/api.php?amount=10&category=11
 
@@ -54,14 +53,25 @@ const Game = () => {
             })
             .then(jsonInfo => {
                 setShowQuestions([...showQuestions, jsonInfo.results[0]]);
-                //Al gurdar las posibles respuestas, lo hacemos de forma desordenada para despues hacer  el map directamente
-                setPossibleSolutions([jsonInfo.results[0].correct_answer, ...jsonInfo.results[0].incorrect_answers].sort(function () { return Math.random() - 0.5 }));
             })
+        console.log(totalUrl)
+        console.log(showQuestions)
     }
 
-    useEffect(() => { nextQuestion() }, []);
+    const mezclarSoluciones = () => {
+        console.log('Soy mezclar soluciones')
+        return (
+            [showQuestions[showQuestions.length - 1].correct_answer, ...showQuestions[showQuestions.length - 1].incorrect_answers].sort(function () {
+                return Math.random() - 0.5
+            })
+        )
+    }
+
+    useEffect(() => { nextQuestion() 
+    console.log('useEffect')}, []);
 
     const rightAnswer = () => {
+        console.log('Soy right answer')
         setContextFunctionFromContext({
             ...valueFromContext.Context,
             ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints + 10 }
@@ -70,29 +80,38 @@ const Game = () => {
         setTimeout(() => {
             Confetti.stop()
         }, 2000)
-        setTimeout(() => { nextQuestion() }, 1000)
+        setTimeout(() => {
+            nextQuestion()
+        }, 500)
+
     }
 
     //Comprobamos si la respuesta seleccionada es correcta o no
     const checkAnswer = (answer) => {
+        console.log('Soy check answer')
         answer === showQuestions[showQuestions.length - 1].correct_answer
             ? rightAnswer()
 
-            : setContextFunctionFromContext({
+            : clientInfoFromContext.totalPoints > 0 && setContextFunctionFromContext({
                 ...valueFromContext.Context,
                 ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints - 2 }
             })
+            setTimeout(() => {
+                nextQuestion()
+            }, 500)
     }
 
     return (
         !endGame
             ? (showQuestions.length !== 0 &&
                 <div className="gamecard">
-                    <img className="imgLogo" src={logoImage} alt="GameLogo" onClick={()=>toggle()}/>
-                    <ModalReturn modal={modal} toggle={toggle}/>
+                    <img className="imgLogo" src={logoImage} alt="GameLogo" onClick={() => toggle()} />
+                    <ModalReturn modal={modal} toggle={toggle} />
                     <div className="row">
                         {/* Mirar -> https://www.npmjs.com/package/react-circular-progressbar */}
-                        <div className="col-6 justifyAround">Tiempo</div>
+                        <div className="col-6 justifyAround">
+                            {/* <Time nextQuestion={nextQuestion} /> */}
+                        </div>
                         <div className="col-6 justifyAround">
                             <p className="points">Points: <span style={{ fontWeight: 'bold', fontSize: '30px' }}>{clientInfoFromContext.totalPoints}</span> pts</p>
                         </div>
@@ -118,13 +137,13 @@ const Game = () => {
                         </div>
                     </div>
                     <div className="row justifyAround answers">
-                        {possibleSolutions.map((answer, index) =>
+                        {mezclarSoluciones().map((answer, index) =>
                             <div key={index} onClick={() => checkAnswer(answer)}>
                                 <p>{answer}</p>
                             </div>)}
                     </div>
                 </div>)
-            : <EndGame puntos={clientInfoFromContext.totalPoints}/>
+            : <EndGame puntos={clientInfoFromContext.totalPoints} />
     )
 }
 
