@@ -20,11 +20,7 @@ const CategoryPopUp = () => {
 
     return (
         <div className="row categoryPopUp">
-            <div className="col-12 closeButton">
-                <Link to='/'>
-                    {closeIcon}
-                </Link>
-            </div>
+            
             {/* Categorias no añadidas + Buscador */}
             <div className="col-12 col-lg-5 addCategory">
                 <input className="inputSearch" type="text" placeholder="Search something..." onChange={(e) => setInputSearch(e.target.value.toLocaleLowerCase())} />
@@ -32,7 +28,7 @@ const CategoryPopUp = () => {
 
                 {apiInfoFromContext.category.filter(categoryItem => categoryItem.name.toLowerCase().includes(inputSearch) && !clientInfoFromContext.category.some(id => id === categoryItem.id)).map((categoryItem, index) =>
 
-                    <div className="AllCategories" key={index} onClick={() => setContextFunctionFromContext({ ...valueFromContext.Context, ClientInfo: { ...clientInfoFromContext, category: [...clientInfoFromContext.category, categoryItem.id]}})}>
+                    <div className="AllCategories" key={index} onClick={() => setContextFunctionFromContext({ ...valueFromContext.Context, ClientInfo: { ...clientInfoFromContext, category: [...clientInfoFromContext.category, categoryItem.id] } })}>
                         <span role="img" aria-label='loveBullet'>❥</span>
                         <p>{categoryItem.name}</p>
                     </div>)
@@ -43,15 +39,28 @@ const CategoryPopUp = () => {
             <div className="col-12 col-lg-5 deleteCategory">
                 {clientInfoFromContext.category.length === 0
                     ? <p>Add some category!</p>
-                    : clientInfoFromContext.category.map((categoryItemId, index) =>
-                        <div className="row clientCategories" key={index}>
-                            <p>{apiInfoFromContext.category.find(categoryId => categoryId.id === categoryItemId).name}</p>
-                            <span onClick={() => setContextFunctionFromContext({
-                                ...valueFromContext.Context, ClientInfo: {
-                                    ...clientInfoFromContext, category: clientInfoFromContext.category.filter(item =>
-                                item !== categoryItemId)}})}>{deleteIcon}</span>
+                    : <div>
+                        {clientInfoFromContext.category.map((categoryItemId, index) =>
+                            <div className="row clientCategories" key={index}>
+                                <p>{apiInfoFromContext.category.find(categoryId => categoryId.id === categoryItemId).name}</p>
+                                <span onClick={() => setContextFunctionFromContext({
+                                    ...valueFromContext.Context, ClientInfo: {
+                                        ...clientInfoFromContext, category: clientInfoFromContext.category.filter(item =>
+                                            item !== categoryItemId)
+                                    }
+                                })}>{deleteIcon}</span>
+                            </div>
+                        )}
+                        
+                    </div>
+                }
+                <div div className="row justifyCenter playButton">
+                    <Link to='/'>
+                        <div>
+                            <h4>SAVE</h4>
                         </div>
-                    )}
+                    </Link>
+                </div>
             </div>
         </div>
     )

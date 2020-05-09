@@ -67,38 +67,33 @@ const Game = () => {
         )
     }
 
-    useEffect(() => { nextQuestion() 
-    console.log('useEffect')}, []);
+    useEffect(() => {
+        nextQuestion()
+        console.log('useEffect')
+    }, []);
 
-    const rightAnswer = () => {
-        console.log('Soy right answer')
-        setContextFunctionFromContext({
-            ...valueFromContext.Context,
-            ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints + 10 }
-        })
-        Confetti.start()
-        setTimeout(() => {
-            Confetti.stop()
-        }, 2000)
-        setTimeout(() => {
-            nextQuestion()
-        }, 500)
-
-    }
-
-    //Comprobamos si la respuesta seleccionada es correcta o no
+    //Comprobamos si la respuesta seleccionada es correcta o no y cargamos la siguiente pregunta
     const checkAnswer = (answer) => {
         console.log('Soy check answer')
-        answer === showQuestions[showQuestions.length - 1].correct_answer
-            ? rightAnswer()
-
-            : clientInfoFromContext.totalPoints > 0 && setContextFunctionFromContext({
+        if (answer === showQuestions[showQuestions.length - 1].correct_answer) {
+            setContextFunctionFromContext({
+                ...valueFromContext.Context,
+                ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints + 10 }
+            })
+            Confetti.start()
+            setTimeout(() => {
+                Confetti.stop()
+            }, 2000)
+        } else {
+            clientInfoFromContext.totalPoints > 0 && setContextFunctionFromContext({
                 ...valueFromContext.Context,
                 ClientInfo: { ...clientInfoFromContext, totalPoints: clientInfoFromContext.totalPoints - 2 }
             })
-            setTimeout(() => {
-                nextQuestion()
-            }, 500)
+        }
+
+        setTimeout(() => {
+            nextQuestion()
+        }, 500)
     }
 
     return (
